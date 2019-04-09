@@ -1,14 +1,16 @@
 package com.pky.smartselling.domain.employee;
 
-import com.pky.smartselling.domain.customer.Customer;
 import com.pky.smartselling.domain.customer.Department;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
+@Data
+@Entity
 public class Employee {
 
     @Id
+    @GeneratedValue
     Long employeeNo;
 
     @Column
@@ -16,6 +18,9 @@ public class Employee {
 
     @Column
     String password;
+
+    @Column
+    String inviteCode;
 
     @Column(name = "active_status")
     @Enumerated(EnumType.STRING)

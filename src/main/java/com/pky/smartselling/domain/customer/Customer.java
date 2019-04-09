@@ -1,17 +1,16 @@
 package com.pky.smartselling.domain.customer;
 
-import org.springframework.data.annotation.Id;
+import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 public class Customer {
 
     @Id
+    @GeneratedValue
     @Column(name = "customer_no")
     Long customerNo;
 

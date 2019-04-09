@@ -7,6 +7,7 @@ import java.util.List;
 public class Department {
 
     @Id
+    @GeneratedValue
     @Column(name = "department_no")
     Long departmentNo;
 
