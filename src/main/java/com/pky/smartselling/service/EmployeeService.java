@@ -16,12 +16,14 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     @Transactional
-    public void register(Employee registerEmployee) {
-        Employee findEmployee = employeeRepository.findByInviteCodeAAndActiveStatusIsREADY(registerEmployee.getInviteCode()).orElseThrow(() -> new NotFoundDataException("invite code"));
+    public Employee register(Employee registerEmployee) {
+        Employee employee = employeeRepository.findByInviteCodeAndActiveStatus(registerEmployee.getInviteCode(), ActiveStatus.READY).orElseThrow(() -> new NotFoundDataException("invite code"));
 
-        findEmployee.setEmail(registerEmployee.getEmail());
-        findEmployee.setPassword(registerEmployee.getPassword());
-        findEmployee.setActiveStatus(ActiveStatus.ACTIVE);
+        employee.setEmail(registerEmployee.getEmail());
+        employee.setPassword(registerEmployee.getPassword());
+        employee.setActiveStatus(ActiveStatus.ACTIVE);
+
+        return employee;
     }
 
 

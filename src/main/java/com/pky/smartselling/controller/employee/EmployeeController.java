@@ -17,11 +17,14 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
-    public void register(RegisterDto.Request request) {
+    public RegisterDto register(RegisterDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
 
-        employeeService.register(copyEmployee);
+        final Employee saveEmployee = employeeService.register(copyEmployee);
+
+        return new RegisterDto.Response();
+
     }
 
 

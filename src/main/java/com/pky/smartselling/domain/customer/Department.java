@@ -1,6 +1,11 @@
 package com.pky.smartselling.domain.customer;
 
+import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,5 +30,11 @@ public class Department {
     @OneToMany(mappedBy="parentDepartment")
     List<Department> children;
 
+    @CreatedDate
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
 }
