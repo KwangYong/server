@@ -1,6 +1,5 @@
 package com.pky.smartselling.domain.estimate;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
 import com.pky.smartselling.domain.customer.Customer;
 import com.pky.smartselling.domain.employee.Employee;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,6 +11,7 @@ import java.util.Collection;
 
 @Entity
 public class EstimateSheet {
+
     @Id
     @Column(name = "estimate_sheet_no")
     @GeneratedValue

@@ -1,20 +1,20 @@
 package com.pky.smartselling.domain.employee;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
 import com.pky.smartselling.domain.customer.Department;
 import com.pky.smartselling.domain.estimate.EstimateSheet;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -47,4 +47,34 @@ public class Employee {
     @LastModifiedDate
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

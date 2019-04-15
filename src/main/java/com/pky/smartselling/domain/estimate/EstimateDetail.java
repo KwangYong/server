@@ -1,8 +1,6 @@
 package com.pky.smartselling.domain.estimate;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
 import com.pky.smartselling.domain.article.Article;
-import com.pky.smartselling.domain.employee.Employee;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -33,7 +31,7 @@ public class EstimateDetail {
     Article article;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "estimate_sheet_no", referencedColumnName = "estimate_sheet_no")
+    @JoinColumn(name = "estimate_sheet_no", referencedColumnName = "estimate_sheet_no", nullable = false)
     EstimateSheet estimateSheet;
 
     @CreatedDate
