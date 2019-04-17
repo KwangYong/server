@@ -4,17 +4,27 @@ import com.pky.smartselling.domain.employee.ActiveStatus;
 import com.pky.smartselling.domain.employee.Employee;
 import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
-@Service
-public class EmployeeService {
+@Component
+public class EmployeeService implements UserDetailsService {
 
-    @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.employeeRepository.findByEmail(username)
+            .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+    }
 
     @Transactional
     public Employee register(Employee registerEmployee) {
@@ -26,10 +36,5 @@ public class EmployeeService {
 
         return employee;
     }
-
-    public Optional<Employee> findByEmail(String email) {
-        return employeeRepository.findByEmail(email);
-    }
-
 
 }

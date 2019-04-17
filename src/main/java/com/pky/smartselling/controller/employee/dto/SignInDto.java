@@ -8,6 +8,7 @@ public class SignInDto {
     public static class Request {
         String email;
         String password;
+
     }
 
 

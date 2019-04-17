@@ -6,11 +6,15 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
+
+import static java.util.stream.Collectors.toList;
 
 @Data
 @Entity
@@ -50,7 +54,7 @@ public class Employee implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Arrays.asList();
     }
 
     @Override
@@ -60,21 +64,18 @@ public class Employee implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

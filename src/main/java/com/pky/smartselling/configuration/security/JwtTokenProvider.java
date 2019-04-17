@@ -18,21 +18,23 @@ import java.util.List;
 
 @Component
 public class JwtTokenProvider {
+
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey = "secret";
+
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000; // 1h
 
     @Autowired
-    private UserDetailsService customUserDetailsService;
+    private UserDetailsService employeeService;
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
-    public String createToken(String username, List<String> roles) {
+
+    public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("roles", roles);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         return Jwts.builder()//
@@ -44,7 +46,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = employeeService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
