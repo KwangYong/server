@@ -2,8 +2,8 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:5.7
-    container_name: mysql-5.7
+    image: mariadb
+    container_name: mariadb
     volumes:
       - "db-data:/var/lib/mysql"
       - "./init/:/docker-entrypoint-initdb.d"
@@ -15,12 +15,6 @@ services:
       MYSQL_USER: "test"
       MYSQL_PASSWORD: "test"
       MYSQL_ROOT_PASSWORD: "root"
-
-  adminer:
-    image: adminer
-    container_name: adminer
-    ports:
-      - 8080:8080
 
 volumes:
   db-data:
