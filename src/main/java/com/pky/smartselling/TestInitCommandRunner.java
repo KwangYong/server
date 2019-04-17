@@ -18,9 +18,11 @@ public class TestInitCommandRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+
         Employee em = new Employee();
-        em.setEmail("test");
-        em.setPassword(passwordEncoder.encode("test"));
+
+        em.setEmail("string");
+        em.setPassword(passwordEncoder.encode("string"));
         employeeRepository.save(em);
     }
 }

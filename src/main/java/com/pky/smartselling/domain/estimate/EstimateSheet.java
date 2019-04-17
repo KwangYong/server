@@ -1,6 +1,6 @@
 package com.pky.smartselling.domain.estimate;
 
-import com.pky.smartselling.domain.customer.Customer;
+import com.pky.smartselling.domain.company.Company;
 import com.pky.smartselling.domain.employee.Employee;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,8 +22,8 @@ public class EstimateSheet {
     Employee assignedEmployee;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="customer_no")
-    Customer customer;
+    @JoinColumn(name="company_no")
+    Company company;
 
     @OneToMany(cascade= CascadeType.ALL, mappedBy="estimateSheet")
     Collection<EstimateDetail> estimateDetails;

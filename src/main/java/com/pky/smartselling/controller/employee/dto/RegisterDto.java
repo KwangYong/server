@@ -1,5 +1,6 @@
 package com.pky.smartselling.controller.employee.dto;
 
+import com.pky.smartselling.domain.employee.Employee;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

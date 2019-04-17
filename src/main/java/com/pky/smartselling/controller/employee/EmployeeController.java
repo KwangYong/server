@@ -12,10 +12,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/v1/employee/")
 @RestController
@@ -30,13 +30,12 @@ public class EmployeeController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
-
     @PostMapping
     public RegisterDto register(RegisterDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
 
-        final Employee saveEmployee = employeeService.register(copyEmployee);
+        final Employee savedEmployee = employeeService.register(copyEmployee);
         return new RegisterDto.Response();
     }
 
@@ -47,16 +46,10 @@ public class EmployeeController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, request.getPassword()));
 
             String token = jwtTokenProvider.createToken(username);
-            Map<Object, Object> model = new HashMap();
-            model.put("username", username);
-            model.put("token", token);
-            return ResponseEntity.ok(model);
+            return ResponseEntity.ok(new SignInDto.Response("Bearer "+ token));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
     }
-
-
-
 
 }

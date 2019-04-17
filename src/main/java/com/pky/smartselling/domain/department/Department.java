@@ -1,6 +1,7 @@
-package com.pky.smartselling.domain.customer;
+package com.pky.smartselling.domain.department;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
+import com.pky.smartselling.domain.company.Company;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
 public class Department {
 
@@ -20,8 +22,8 @@ public class Department {
     String name;
 
     @ManyToOne(optional=false)
-    @JoinColumn(name="customer_no")
-    Customer customer;
+    @JoinColumn(name="company_no")
+    Company company;
 
     @ManyToOne
     @JoinColumn(name="parent_department_no")

@@ -1,6 +1,6 @@
-package com.pky.smartselling.domain.customer;
+package com.pky.smartselling.domain.company;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
+import com.pky.smartselling.domain.department.Department;
 import com.pky.smartselling.domain.estimate.EstimateSheet;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,21 +9,20 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
-public class Customer {
+public class Company {
 
     @Id
     @GeneratedValue
-    @Column(name = "customer_no")
-    Long customerNo;
+    @Column(name = "company_no")
+    Long companyNo;
 
-    @OneToMany(cascade= CascadeType.ALL, mappedBy="customer")
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="company")
     Collection<Department> departments;
 
-    @OneToMany(cascade= CascadeType.ALL, mappedBy="customer")
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="company")
     Collection<EstimateSheet> estimateSheets;
 
     @CreatedDate
