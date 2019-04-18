@@ -1,12 +1,13 @@
-package com.pky.smartselling.controller.employee.dto;
+package com.pky.smartselling.controller.api.dto;
 
-import com.pky.smartselling.domain.employee.Employee;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
 
 public class RegisterDto {
+    @ApiModel("RegisterDto")
     @Data
     public static class Request extends RegisterDto {
         @NotNull
@@ -16,6 +17,7 @@ public class RegisterDto {
         @NotNull
         String password;
     }
+    @ApiModel("RegisterDto")
     @Data
     public static class Response extends RegisterDto {
 

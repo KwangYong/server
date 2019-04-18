@@ -1,6 +1,6 @@
 package com.pky.smartselling.repository;
 
-import com.pky.smartselling.domain.employee.ActiveStatus;
+import com.pky.smartselling.domain.employee.EmployeeActiveStatus;
 import com.pky.smartselling.domain.employee.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findByEmail(@Param("email") String email);
-    Optional<Employee> findByInviteCodeAndActiveStatus(@Param("inviteCode") String inviteCode, @Param("activeStatus") ActiveStatus activeStatus);
+    Optional<Employee> findByInviteCodeAndEmployeeActiveStatus(@Param("inviteCode") String inviteCode, @Param("employeeActiveStatus") EmployeeActiveStatus employeeActiveStatus);
 }

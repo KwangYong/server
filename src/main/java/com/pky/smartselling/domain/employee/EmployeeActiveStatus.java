@@ -1,6 +1,6 @@
 package com.pky.smartselling.domain.employee;
 
-public enum ActiveStatus {
+public enum EmployeeActiveStatus {
     READY,
     ACTIVE,
     NON_ACTIVE

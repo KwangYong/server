@@ -14,7 +14,7 @@ public class EstimateSheet {
 
     @Id
     @Column(name = "estimate_sheet_no")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long estimateSheetNo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

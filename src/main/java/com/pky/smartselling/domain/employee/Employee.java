@@ -18,7 +18,7 @@ import java.util.Collection;
 public class Employee implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long employeeNo;
 
     @Column
@@ -32,7 +32,7 @@ public class Employee implements UserDetails {
 
     @Column(name = "active_status")
     @Enumerated(EnumType.STRING)
-    ActiveStatus activeStatus;
+    EmployeeActiveStatus employeeActiveStatus;
 
     @ManyToOne
     @JoinColumn(name="department_no")

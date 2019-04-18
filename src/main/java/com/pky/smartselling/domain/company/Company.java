@@ -15,9 +15,16 @@ import java.util.Collection;
 public class Company {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_no")
     Long companyNo;
+
+    @Column(name = "company_name", nullable = false)
+    String companyName;
+
+    @Column(name = "company_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    CompanyStatus companyStatus;
 
     @OneToMany(cascade= CascadeType.ALL, mappedBy="company")
     Collection<Department> departments;

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 public class EstimateDetail {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long estimateDetailNo;
 
     @Column(name = "unit_price")

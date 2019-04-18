@@ -19,10 +19,11 @@ import java.util.Optional;
 
 @Configuration
 @EnableSwagger2
+
 public class SwaggerConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN = ".*/api/.*";
 
     @Bean
     public Docket api() {

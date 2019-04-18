@@ -1,6 +1,6 @@
 package com.pky.smartselling.service;
 
-import com.pky.smartselling.domain.employee.ActiveStatus;
+import com.pky.smartselling.domain.employee.EmployeeActiveStatus;
 import com.pky.smartselling.domain.employee.Employee;
 import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.repository.EmployeeRepository;
@@ -28,11 +28,11 @@ public class EmployeeService implements UserDetailsService {
 
     @Transactional
     public Employee register(Employee registerEmployee) {
-        Employee employee = employeeRepository.findByInviteCodeAndActiveStatus(registerEmployee.getInviteCode(), ActiveStatus.READY).orElseThrow(() -> new NotFoundDataException("invite code"));
+        Employee employee = employeeRepository.findByInviteCodeAndEmployeeActiveStatus(registerEmployee.getInviteCode(), EmployeeActiveStatus.READY).orElseThrow(() -> new NotFoundDataException("invite code"));
 
         employee.setEmail(registerEmployee.getEmail());
         employee.setPassword(registerEmployee.getPassword());
-        employee.setActiveStatus(ActiveStatus.ACTIVE);
+        employee.setEmployeeActiveStatus(EmployeeActiveStatus.ACTIVE);
 
         return employee;
     }
