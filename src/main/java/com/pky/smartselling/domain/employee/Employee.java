@@ -1,11 +1,13 @@
 package com.pky.smartselling.domain.employee;
 
+import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.department.Department;
 import com.pky.smartselling.domain.estimate.EstimateSheet;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -15,7 +17,7 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Employee implements UserDetails {
+public class Employee extends Auditable implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +36,13 @@ public class Employee implements UserDetails {
     @Enumerated(EnumType.STRING)
     EmployeeActiveStatus employeeActiveStatus;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "employee_type", nullable = false)
+    EmployeeType employeeType;
+
     @ManyToOne
     @JoinColumn(name="department_no")
     Department department;
-
-    @OneToMany(cascade= CascadeType.ALL, mappedBy="assignedEmployee", fetch = FetchType.EAGER)
-    Collection<EstimateSheet> estimateSheets;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -51,7 +54,7 @@ public class Employee implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList();
+        return Arrays.asList(new SimpleGrantedAuthority(employeeType.name()));
     }
 
     @Override

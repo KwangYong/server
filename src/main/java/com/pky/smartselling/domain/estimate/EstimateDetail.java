@@ -1,12 +1,10 @@
 package com.pky.smartselling.domain.estimate;
 
+import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.article.Article;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 public class EstimateDetail {
@@ -33,12 +31,4 @@ public class EstimateDetail {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "estimate_sheet_no", referencedColumnName = "estimate_sheet_no", nullable = false)
     EstimateSheet estimateSheet;
-
-    @CreatedDate
-    @Column(name = "created_at")
-    LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    LocalDateTime updatedAt;
 }

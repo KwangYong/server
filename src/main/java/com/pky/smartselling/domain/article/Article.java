@@ -1,17 +1,14 @@
 package com.pky.smartselling.domain.article;
 
-import com.pky.smartselling.converter.LocalDateTimePersistenceConverter;
+import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.estimate.EstimateDetail;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
-public class Article {
+public class Article extends Auditable {
 
     @Id
     @Column(name ="article_no")
@@ -30,13 +27,4 @@ public class Article {
     @OneToMany(cascade= CascadeType.ALL, mappedBy="article")
     Collection<EstimateDetail> estimateDetails;
 
-    @CreatedDate
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    @Column(name = "created_at")
-    LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    @Column(name = "updated_at")
-    LocalDateTime updatedAt;
 }

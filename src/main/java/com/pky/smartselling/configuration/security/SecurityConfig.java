@@ -1,5 +1,6 @@
 package com.pky.smartselling.configuration.security;
 
+import com.pky.smartselling.domain.employee.EmployeeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers( "/admin/**").hasAuthority(EmployeeType.ADMIN.name())
                 .anyRequest().authenticated()
             .and()
-            .apply(new JwtConfigurer(jwtTokenProvider));
+                .apply(new JwtConfigurer(jwtTokenProvider));
 
     }
 }

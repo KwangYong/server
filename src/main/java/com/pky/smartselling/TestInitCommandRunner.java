@@ -1,6 +1,7 @@
 package com.pky.smartselling;
 
 import com.pky.smartselling.domain.employee.Employee;
+import com.pky.smartselling.domain.employee.EmployeeType;
 import com.pky.smartselling.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +22,7 @@ public class TestInitCommandRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Employee em = new Employee();
         em.setEmail("string");
+        em.setEmployeeType(EmployeeType.ADMIN);
         em.setPassword(passwordEncoder.encode("string"));
         employeeRepository.save(em);
     }
