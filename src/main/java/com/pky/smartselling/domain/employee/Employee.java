@@ -29,9 +29,6 @@ public class Employee extends Auditable implements UserDetails {
     @Column
     String password;
 
-    @Column(name ="invite_code")
-    String inviteCode;
-
     @Column(name = "active_status")
     @Enumerated(EnumType.STRING)
     EmployeeActiveStatus employeeActiveStatus;

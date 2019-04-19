@@ -16,10 +16,6 @@ public class DepartmentService {
     @Autowired
     DepartmentRepository departmentRepository;
 
-    @Autowired
-    CompanyService companyService;
-
-
     @Transactional
     public Department addDepartment(Company company, Optional<Long> parentDepartmentNo, String departmentName) {
 
@@ -30,6 +26,10 @@ public class DepartmentService {
         saveDepartment.setCompany(company);
 
         return departmentRepository.save(saveDepartment);
+    }
+
+    public Optional<Department> findById(){
+
     }
 
 

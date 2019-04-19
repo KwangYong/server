@@ -1,21 +1,25 @@
 package com.pky.smartselling.controller.api;
 
 import com.pky.smartselling.configuration.security.JwtTokenProvider;
-import com.pky.smartselling.controller.api.dto.RegisterDto;
+import com.pky.smartselling.controller.api.dto.RegisterEmailDto;
+import com.pky.smartselling.controller.api.dto.RegisterTemporaryDto;
 import com.pky.smartselling.controller.api.dto.SignInDto;
 import com.pky.smartselling.domain.employee.Employee;
+import com.pky.smartselling.domain.employee.EmployeeType;
+import com.pky.smartselling.service.DepartmentService;
 import com.pky.smartselling.service.EmployeeService;
+import com.pky.smartselling.util.HashIdsUtil;
+import org.hashids.Hashids;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,21 +31,42 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @Autowired
+    DepartmentService departmentService;
+
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping
-    public RegisterDto register(@RequestBody @Valid RegisterDto.Request request) {
+    @Autowired
+    HashIdsUtil hashIdsUtil;
+
+
+
+     @PostMapping("{employeeNo}/email")
+    public ResponseEntity<Void> registerEmail(@PathVariable("employeeNo") String employeeNo, @RequestBody @Valid RegisterEmailDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
+        copyEmployee.setEmployeeNo(hashIdsUtil.decode(employeeNo));
 
-        final Employee savedEmployee = employeeService.register(copyEmployee);
-        return new RegisterDto.Response();
+        employeeService.registerEmail(copyEmployee);
+
+        return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("temporary")
+    public ResponseEntity<RegisterTemporaryDto.Response> registerTemporary(@AuthenticationPrincipal Employee userDetails,
+                                                  @RequestBody @Valid RegisterTemporaryDto.Request request) {
+        final Employee copiedEmployee = new Employee();
+        departmentService.
+        copiedEmployee.setEmployeeType(EmployeeType.USER);
+
+        String inviteCode = hashIdsUtil.encode(employeeService.registerTemporary(copiedEmployee).getEmployeeNo());
+        return ResponseEntity.ok(new RegisterTemporaryDto.Response(inviteCode));
+    }
+
+    @PostMapping("signIn")
     public ResponseEntity signIn(@RequestBody @Valid SignInDto.Request request) {
         try {
             String username = request.getEmail();
