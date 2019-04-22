@@ -59,7 +59,6 @@ public class EmployeeController {
     public ResponseEntity<RegisterTemporaryDto.Response> registerTemporary(@AuthenticationPrincipal Employee userDetails,
                                                   @RequestBody @Valid RegisterTemporaryDto.Request request) {
         final Employee copiedEmployee = new Employee();
-        departmentService.
         copiedEmployee.setEmployeeType(EmployeeType.USER);
 
         String inviteCode = hashIdsUtil.encode(employeeService.registerTemporary(copiedEmployee).getEmployeeNo());

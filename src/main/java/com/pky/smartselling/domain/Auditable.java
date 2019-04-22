@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
-@Getter(AccessLevel.PROTECTED)
-@Setter(AccessLevel.PROTECTED)
+@Getter()
+@Setter()
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
@@ -41,4 +41,6 @@ public abstract class Auditable {
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
+
+
 }

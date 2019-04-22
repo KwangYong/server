@@ -17,6 +17,7 @@ import java.util.Collection;
 
 @Data
 @Entity
+@Table(name = "employee")
 public class Employee extends Auditable implements UserDetails {
 
     @Id
@@ -73,6 +74,6 @@ public class Employee extends Auditable implements UserDetails {
     }
     @Override
     public boolean isEnabled() {
-        return true;
+        return employeeActiveStatus == EmployeeActiveStatus.ACTIVE;
     }
 }

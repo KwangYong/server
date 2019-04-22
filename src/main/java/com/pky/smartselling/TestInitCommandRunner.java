@@ -1,6 +1,7 @@
 package com.pky.smartselling;
 
 import com.pky.smartselling.domain.employee.Employee;
+import com.pky.smartselling.domain.employee.EmployeeActiveStatus;
 import com.pky.smartselling.domain.employee.EmployeeType;
 import com.pky.smartselling.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class TestInitCommandRunner implements CommandLineRunner {
         Employee em = new Employee();
         em.setEmail("string");
         em.setEmployeeType(EmployeeType.ADMIN);
+        em.setEmployeeActiveStatus(EmployeeActiveStatus.ACTIVE);
         em.setPassword(passwordEncoder.encode("string"));
         employeeRepository.save(em);
     }

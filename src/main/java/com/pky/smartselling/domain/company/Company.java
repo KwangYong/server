@@ -1,6 +1,7 @@
 package com.pky.smartselling.domain.company;
 
 import com.pky.smartselling.domain.Auditable;
+import com.pky.smartselling.domain.customer.Customer;
 import com.pky.smartselling.domain.department.Department;
 import com.pky.smartselling.domain.estimate.EstimateSheet;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.util.Collection;
 
 @Data
 @Entity
+@Table(name = "company")
 public class Company extends Auditable {
 
     @Id
@@ -20,14 +22,21 @@ public class Company extends Auditable {
     @Column(name = "company_name", nullable = false)
     String companyName;
 
+    @Column
+    String businessLicenseNumber;
+
+    @Column
+    String address;
+
     @Column(name = "company_status", nullable = false)
     @Enumerated(EnumType.STRING)
     CompanyStatus companyStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "company")
     Collection<Department> departments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    Collection<EstimateSheet> estimateSheets;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "company")
+    Collection<Customer> customers;
+
 
 }

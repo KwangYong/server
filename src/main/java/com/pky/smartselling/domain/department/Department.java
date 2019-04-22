@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "department")
 public class Department extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,8 +6,8 @@ import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -28,8 +28,9 @@ public class DepartmentService {
         return departmentRepository.save(saveDepartment);
     }
 
-    public Optional<Department> findById(){
-
+    @Transactional(readOnly = true)
+    public Optional<Department> findById(Long id){
+        return departmentRepository.findById(id);
     }
 
 
