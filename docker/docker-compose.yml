@@ -4,9 +4,6 @@ services:
   db:
     image: mariadb
     container_name: mariadb
-    volumes:
-      - "db-data:/var/lib/mysql"
-      - "./init/:/docker-entrypoint-initdb.d"
     restart: always
     ports:
       - 3306:3306

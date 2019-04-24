@@ -2,8 +2,7 @@ package com.pky.smartselling.domain.customer;
 
 import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.company.Company;
-import com.pky.smartselling.domain.deliverySheet.DeliverySheet;
-import com.pky.smartselling.domain.estimate.EstimateSheet;
+import com.pky.smartselling.domain.sheet.Sheet;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,12 +28,6 @@ public class Customer extends Auditable {
 
     @OneToMany(mappedBy="parentCustomer")
     List<Customer> children;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    Collection<EstimateSheet> estimateSheets;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    Collection<DeliverySheet> deliverySheet;
 
     @Column
     String customerOwnerName;

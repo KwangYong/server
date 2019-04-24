@@ -7,8 +7,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 
-public class RegisterEmailDto {
-    @ApiModel("RegisterEmailDto")
+public class UpdateEmailEmployeeDto {
+    @ApiModel("UpdateEmailEmployeeDto")
     @Data
     public static class Request {
         @NotNull
@@ -17,7 +17,7 @@ public class RegisterEmailDto {
         String password;
     }
     @AllArgsConstructor
-    @ApiModel("RegisterEmailDto")
+    @ApiModel("UpdateEmailEmployeeDto")
     @Data
     public static class Response  {
     }

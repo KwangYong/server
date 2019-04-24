@@ -1,8 +1,8 @@
 package com.pky.smartselling.domain.employee;
 
 import com.pky.smartselling.domain.Auditable;
+import com.pky.smartselling.domain.company.Company;
 import com.pky.smartselling.domain.department.Department;
-import com.pky.smartselling.domain.estimate.EstimateSheet;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -41,6 +41,10 @@ public class Employee extends Auditable implements UserDetails {
     @ManyToOne
     @JoinColumn(name="department_no")
     Department department;
+
+    @ManyToOne
+    @JoinColumn(name="company_no")
+    Company company;
 
     @CreatedDate
     @Column(name = "created_at")

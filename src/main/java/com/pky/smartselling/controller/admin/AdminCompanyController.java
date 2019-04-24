@@ -26,7 +26,7 @@ public class AdminCompanyController {
     @PutMapping
     public ResponseEntity updateCompany(@RequestBody @Valid AdminCompanyDto.Request dto) {
         return ResponseEntity.ok(
-                new AdminCompanyDto.Response(companyService.addCompany(ModelMapperUtil.MODEL_MAPPER.map(dto, Company.class)).getCompanyNo()));
+                new AdminCompanyDto.Response(companyService.updateCompany(ModelMapperUtil.MODEL_MAPPER.map(dto, Company.class)).getCompanyNo()));
     }
 
     @GetMapping("{companyNo}")

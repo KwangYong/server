@@ -1,9 +1,7 @@
 package com.pky.smartselling.domain.article;
 
 import com.pky.smartselling.domain.Auditable;
-import com.pky.smartselling.domain.SheetDetail;
-import com.pky.smartselling.domain.deliverySheet.DeliveryDetail;
-import com.pky.smartselling.domain.estimate.EstimateDetail;
+import com.pky.smartselling.domain.sheet.SheetDetail;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -28,8 +26,5 @@ public class Article extends Auditable {
     BigDecimal price;
 
     @OneToMany(cascade= CascadeType.ALL, mappedBy="article")
-    Collection<EstimateDetail> estimateDetails;
-
-    @OneToMany(cascade= CascadeType.ALL, mappedBy="article")
-    Collection<DeliveryDetail> deliveryDetails;
+    Collection<SheetDetail> sheetDetails;
 }

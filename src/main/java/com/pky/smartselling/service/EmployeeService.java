@@ -27,7 +27,7 @@ public class EmployeeService implements UserDetailsService {
     }
 
     @Transactional
-    public Employee registerEmail(Employee registerEmployee) {
+    public Employee updateEmail(Employee registerEmployee) {
         Employee employee = employeeRepository.findById(registerEmployee.getEmployeeNo()).filter(e -> e.getEmployeeActiveStatus() == EmployeeActiveStatus.READY).orElseThrow(() -> new NotFoundDataException("invite code"));
 
         employee.setEmail(registerEmployee.getEmail());
@@ -38,7 +38,7 @@ public class EmployeeService implements UserDetailsService {
     }
 
     @Transactional
-    public Employee registerTemporary(Employee registerEmployee) {
+    public Employee addTemporaryEmployee(Employee registerEmployee) {
         return employeeRepository.save(registerEmployee);
     }
 

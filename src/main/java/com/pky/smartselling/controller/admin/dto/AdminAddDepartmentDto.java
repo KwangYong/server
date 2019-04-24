@@ -14,7 +14,6 @@ public class AdminAddDepartmentDto {
 
     @ApiModel("AdminAddDepartmentDto")
     public static class Response extends AddDepartmentDto.Response {
-
         public Response(Department companyNo) {
             super((companyNo));
         }
