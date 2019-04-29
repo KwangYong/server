@@ -24,5 +24,9 @@ public class AdminCompanyDto {
     public static class Response {
         String companyId;
 
+
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
+        }
     }
 }

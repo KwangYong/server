@@ -12,10 +12,9 @@ public class HashIdsUtil {
 
     private static  String salt = "secret";
 
-    public static Hashids hashids = new Hashids(salt);
+    public static Hashids hashids = new Hashids(salt, 5,"23456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     public static String encode(long value){
-        System.out.println(value);
         return hashids.encode(value);
     }
 

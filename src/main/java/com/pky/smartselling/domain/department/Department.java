@@ -16,14 +16,14 @@ public class Department extends Auditable {
     @Column(name = "department_no")
     Long departmentNo;
 
-    @Column(nullable = false)
-    String name;
+    @Column(nullable = false, name = "department_name")
+    String departmentName;
 
     @ManyToOne(optional=false)
     @JoinColumn(name="company_no")
     Company company;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="parent_department_no")
     Department parentDepartment;
 

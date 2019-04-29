@@ -7,6 +7,8 @@ import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.service.CompanyService;
 import com.pky.smartselling.service.DepartmentService;
 import com.pky.smartselling.util.HashIdsUtil;
+import com.pky.smartselling.util.ModelMapperUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,8 @@ public class AdminDepartmentController {
 
         Department requestSaveDepartment = new Department();
 
+        BeanUtils.copyProperties(dto, requestSaveDepartment);
+
         Company company = new Company();
         company.setCompanyNo(HashIdsUtil.decode(dto.getCompanyId()));
         requestSaveDepartment.setCompany(company);
@@ -37,6 +41,8 @@ public class AdminDepartmentController {
             parent.setDepartmentNo(HashIdsUtil.decode(c));
             requestSaveDepartment.setParentDepartment(parent);
         });
+
+        departmentService.addDepartment(requestSaveDepartment);
 
         return ResponseEntity.ok(requestSaveDepartment);
     }
