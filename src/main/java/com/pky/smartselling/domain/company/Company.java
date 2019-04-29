@@ -5,14 +5,19 @@ import com.pky.smartselling.domain.customer.Customer;
 import com.pky.smartselling.domain.department.Department;
 import com.pky.smartselling.domain.employee.Employee;
 import com.pky.smartselling.domain.sheet.Sheet;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 
+@AllArgsConstructor
+@Builder
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
 @Table(name = "company")
+@ToString
 public class Company extends Auditable {
 
     @Id

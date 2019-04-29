@@ -37,14 +37,10 @@ public class EmployeeController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    HashIdsUtil hashIdsUtil;
-
-    @PutMapping("{employeeNo}/email")
     public ResponseEntity<Void> updaterEmail(@PathVariable("employeeNo") String employeeNo, @RequestBody @Valid UpdateEmailEmployeeDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
-        copyEmployee.setEmployeeNo(hashIdsUtil.decode(employeeNo));
+        copyEmployee.setEmployeeNo(HashIdsUtil.decode(employeeNo));
 
         employeeService.updateEmail(copyEmployee);
 
@@ -57,7 +53,7 @@ public class EmployeeController {
         final Employee copiedEmployee = new Employee();
         copiedEmployee.setEmployeeType(EmployeeType.USER);
 
-        String inviteCode = hashIdsUtil.encode(employeeService.addTemporaryEmployee(copiedEmployee).getEmployeeNo());
+        String inviteCode = HashIdsUtil.encode(employeeService.addTemporaryEmployee(copiedEmployee).getEmployeeNo());
         return ResponseEntity.ok(new AddTemporaryEmployeeDto.Response(inviteCode));
     }
 

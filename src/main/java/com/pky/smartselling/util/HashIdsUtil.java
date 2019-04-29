@@ -7,24 +7,19 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
+
 public class HashIdsUtil {
 
-    @Value("${com.pky.smartselling.hashids.salt:secret}")
-    private String salt = "secret";
+    private static  String salt = "secret";
 
-    Hashids hashids;
+    public static Hashids hashids = new Hashids(salt);
 
-    @PostConstruct
-    public void hashIds() {
-        this.hashids = new Hashids(salt);
-    }
-
-    public String encode(long value){
+    public static String encode(long value){
+        System.out.println(value);
         return hashids.encode(value);
     }
 
-    public Long decode(String value) {
+    public static Long decode(String value) {
         long[] values = hashids.decode(value);
         if(values.length == 1) {
             return values[0];

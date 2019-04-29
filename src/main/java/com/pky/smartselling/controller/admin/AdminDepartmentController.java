@@ -1,15 +1,15 @@
 package com.pky.smartselling.controller.admin;
 
 import com.pky.smartselling.controller.admin.dto.AdminAddDepartmentDto;
+import com.pky.smartselling.domain.company.Company;
+import com.pky.smartselling.domain.department.Department;
 import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.service.CompanyService;
 import com.pky.smartselling.service.DepartmentService;
+import com.pky.smartselling.util.HashIdsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,10 +26,23 @@ public class AdminDepartmentController {
     @PostMapping
     public ResponseEntity addDepartment(@RequestBody @Valid AdminAddDepartmentDto.Request dto){
 
-        return ResponseEntity.ok(new AdminAddDepartmentDto.Response(
-                departmentService.addDepartment(
-                        companyService.findById(dto.getCompanyNo()).orElseThrow(() -> new NotFoundDataException("company no")),
-                        dto.getParentDepartmentNo(),
-                        dto.getDepartmentName())));
+        Department requestSaveDepartment = new Department();
+
+        Company company = new Company();
+        company.setCompanyNo(HashIdsUtil.decode(dto.getCompanyId()));
+        requestSaveDepartment.setCompany(company);
+
+        dto.getParentDepartmentId().ifPresent(c -> {
+            Department parent = new Department();
+            parent.setDepartmentNo(HashIdsUtil.decode(c));
+            requestSaveDepartment.setParentDepartment(parent);
+        });
+
+        return ResponseEntity.ok(requestSaveDepartment);
+    }
+
+    @GetMapping
+    public ResponseEntity getDepartments(String companyId) {        ;
+        return ResponseEntity.ok(departmentService.findByAll(HashIdsUtil.decode(companyId)));
     }
 }

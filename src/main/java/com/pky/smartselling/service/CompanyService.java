@@ -3,6 +3,7 @@ package com.pky.smartselling.service;
 import com.pky.smartselling.domain.company.Company;
 import com.pky.smartselling.exception.NotFoundDataException;
 import com.pky.smartselling.repository.CompanyRepository;
+import com.pky.smartselling.util.ExceptionUtil;
 import com.pky.smartselling.util.ModelMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,11 @@ import java.util.Optional;
 public class CompanyService {
 
     @Autowired
-    CompanyRepository companyRepository;
+    final CompanyRepository companyRepository;
+
+    public CompanyService(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Transactional
     public Company addCompany(Company company) {
@@ -24,7 +29,7 @@ public class CompanyService {
 
     @Transactional
     public Company updateCompany(Company updateData) {
-        final Company findCompany = findById(updateData.getCompanyNo()).orElseThrow(() -> new NotFoundDataException(String.format("company id %d", updateData.getCompanyNo())));
+        final Company findCompany = findById(updateData.getCompanyNo()).orElseThrow(ExceptionUtil.createNotFoundData("company", updateData.getCompanyNo()));
         ModelMapperUtil.MODEL_MAPPER.map(updateData, findCompany);
         return findCompany;
     }

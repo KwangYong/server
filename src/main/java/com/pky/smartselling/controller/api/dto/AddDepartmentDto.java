@@ -1,7 +1,9 @@
 package com.pky.smartselling.controller.api.dto;
 
 import com.pky.smartselling.domain.department.Department;
+import com.pky.smartselling.util.HashIdsUtil;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,19 +15,23 @@ public class AddDepartmentDto {
     @Data
     public static class Request {
 
-        Optional<Long> parentDepartmentNo = Optional.empty();
+        Optional<String> parentDepartmentId = Optional.empty();
+
 
         @NotBlank
         String departmentName;
 
     }
     @ApiModel("AddDepartmentDto")
-    @Data
-    public static class Response {
-        Long departmentNo;
 
-        public Response(Department department) {
-            this.departmentNo = department.getDepartmentNo();
+    @AllArgsConstructor
+    public static class Response {
+
+        Long departmentId;
+
+        public String getDepartmentId() {
+            return HashIdsUtil.encode(departmentId);
         }
+
     }
 }

@@ -22,12 +22,9 @@ public class DepartmentController {
 
     @PostMapping
     public  ResponseEntity addDepartment(@AuthenticationPrincipal Employee userDetails,
-                                         @RequestBody @Valid AddDepartmentDto.Request dto){
+                                         @RequestBody @Valid AddDepartmentDto.Request dto) {
 
-        return ResponseEntity.ok(new AddDepartmentDto.Response(
-                departmentService.addDepartment(
-                        userDetails.getDepartment().getCompany(),
-                        dto.getParentDepartmentNo(),
-                        dto.getDepartmentName())));
+        return ResponseEntity.ok(null);
     }
+
 }
