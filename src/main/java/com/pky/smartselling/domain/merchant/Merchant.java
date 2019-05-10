@@ -1,17 +1,16 @@
-package com.pky.smartselling.domain.customer;
+package com.pky.smartselling.domain.merchant;
 
 import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.company.Company;
-import com.pky.smartselling.domain.sheet.Sheet;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.List;
 
+@Data
 @Entity
-@Table(name = "customer")
-public class Customer extends Auditable {
+@Table(name = "merchant")
+public class Merchant extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +20,6 @@ public class Customer extends Auditable {
     @ManyToOne(optional=false)
     @JoinColumn(name="company_no")
     Company company;
-
-    @ManyToOne
-    @JoinColumn(name="parent_customer_no")
-    Customer parentCustomer;
-
-    @OneToMany(mappedBy="parentCustomer")
-    List<Customer> children;
 
     @Column
     String customerOwnerName;

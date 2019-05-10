@@ -38,11 +38,11 @@ public class Employee extends Auditable implements UserDetails {
     @Column(name = "employee_type", nullable = false)
     EmployeeType employeeType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="department_no")
     Department department;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="company_no")
     Company company;
 

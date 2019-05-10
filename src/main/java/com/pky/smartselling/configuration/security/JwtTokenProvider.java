@@ -1,5 +1,7 @@
 package com.pky.smartselling.configuration.security;
 
+import com.pky.smartselling.domain.employee.Employee;
+import com.pky.smartselling.service.EmployeeService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +27,7 @@ public class JwtTokenProvider {
     private long validityInMilliseconds = 3600000; // 1h
 
     @Autowired
-    private UserDetailsService employeeService;
+    private EmployeeService employeeService;
 
     @PostConstruct
     protected void init() {
@@ -44,10 +46,15 @@ public class JwtTokenProvider {
             .compact();
     }
 
-    @Transactional(readOnly = true)
+
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = employeeService.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = getEmployee(token);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    @Transactional(readOnly = true)
+    public Employee getEmployee(String token) {
+        return employeeService.loadUserByUsername(getUsername(token));
     }
 
     public String getUsername(String token) {

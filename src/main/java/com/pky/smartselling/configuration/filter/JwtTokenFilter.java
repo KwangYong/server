@@ -1,5 +1,6 @@
 package com.pky.smartselling.configuration.filter;
 
+import com.pky.smartselling.configuration.constant.HttpRequestAttributes;
 import com.pky.smartselling.configuration.security.JwtTokenProvider;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -25,6 +26,10 @@ public class JwtTokenFilter extends GenericFilterBean {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
+
+            if(auth != null) {
+                req.setAttribute(HttpRequestAttributes.EMPLOYEE, jwtTokenProvider.getEmployee(token));
+            }
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(req, res);

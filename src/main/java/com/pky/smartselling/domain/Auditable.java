@@ -30,8 +30,8 @@ public abstract class Auditable {
 
     @CreationTimestamp
     @Convert(converter = LocalDateTimePersistenceConverter.class)
-    @Column(name = "created_date", updatable = false)
-    private LocalDateTime createdDate;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
     @LastModifiedBy
     @Column(name = "last_modified_by")
@@ -39,8 +39,14 @@ public abstract class Auditable {
 
     @UpdateTimestamp
     @Convert(converter = LocalDateTimePersistenceConverter.class)
-    @Column(name = "last_modified_date")
-    private LocalDateTime lastModifiedDate;
+    @Column(name = "last_modified_at")
+    private LocalDateTime lastModifiedAt;
 
+    @Column(name = "deleted_by")
+    private Long deletedBy;
+
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
 }

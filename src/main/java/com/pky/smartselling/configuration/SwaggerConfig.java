@@ -1,5 +1,7 @@
 package com.pky.smartselling.configuration;
 
+import com.pky.smartselling.controller.HashId;
+import com.pky.smartselling.domain.employee.Employee;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,6 +33,8 @@ public class SwaggerConfig {
                 .securitySchemes(Arrays.asList(apiKey()))
                 .securityContexts(Arrays.asList(securityContext()))
                 .ignoredParameterTypes(AuthenticationPrincipal.class)
+                .ignoredParameterTypes(Employee.class)
+                .ignoredParameterTypes(HashId.class)
                 .genericModelSubstitutes(Optional.class)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.pky.smartselling.controller"))

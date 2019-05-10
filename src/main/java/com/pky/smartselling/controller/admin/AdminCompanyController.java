@@ -25,8 +25,10 @@ public class AdminCompanyController {
     @PostMapping
     public ResponseEntity<AdminCompanyDto.Response> addCompany(@RequestBody @Valid AdminCompanyDto.Request dto) {
 
-        return ResponseEntity.ok(ModelMapperUtil.MODEL_MAPPER.map(companyService.addCompany(Company.builder().companyName(dto.getCompanyName()).companyStatus(dto.getStatus()).build()),
-                AdminCompanyDto.Response.class));
+        Company company = new Company();
+        //return ResponseEntity.ok(ModelMapperUtil.MODEL_MAPPER.map(companyService.addCompany(company.setCompanyName(dto.getCompanyName()).companyStatus(dto.getStatus()).build()),
+          //      AdminCompanyDto.Response.class));
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping

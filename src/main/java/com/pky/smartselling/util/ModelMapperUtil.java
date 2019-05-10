@@ -1,7 +1,9 @@
 package com.pky.smartselling.util;
 
 import com.pky.smartselling.controller.admin.dto.AdminCompanyDto;
+import com.pky.smartselling.controller.api.dto.MerchantDto;
 import com.pky.smartselling.domain.company.Company;
+import com.pky.smartselling.domain.merchant.Merchant;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -12,7 +14,12 @@ public class ModelMapperUtil {
     static {
         MODEL_MAPPER = new ModelMapper();
         MODEL_MAPPER.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-        TypeMap<Company, AdminCompanyDto.Response> type =  ModelMapperUtil.MODEL_MAPPER.createTypeMap(Company.class, AdminCompanyDto.Response.class);
+        registerCompanyToAdminCompanyDtoResponse(MODEL_MAPPER);
+        registerCustomerToCustomerDtoResponse(MODEL_MAPPER);
+    }
+
+    static void registerCompanyToAdminCompanyDtoResponse(ModelMapper modelMapper) {
+        TypeMap<Company, AdminCompanyDto.Response> type =  modelMapper.createTypeMap(Company.class, AdminCompanyDto.Response.class);
         type.addMappings(mapping -> mapping.map(Company::getCompanyNo, AdminCompanyDto.Response::setCompanyId));
 
         type.setPostConverter( context -> {
@@ -20,4 +27,15 @@ public class ModelMapperUtil {
             return context.getDestination();
         });
     }
+
+    static void registerCustomerToCustomerDtoResponse(ModelMapper modelMapper) {
+        TypeMap<Merchant, MerchantDto.Response> type =  modelMapper.createTypeMap(Merchant.class, MerchantDto.Response.class);
+        type.addMappings(mapping -> mapping.map(Merchant::getCustomerNo, MerchantDto.Response::setCustomerId));
+
+        type.setPostConverter( context -> {
+            context.getDestination().setCustomerId(HashIdsUtil.encode(context.getSource().getCustomerNo()));
+            return context.getDestination();
+        });
+    }
+
 }
