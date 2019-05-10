@@ -25,8 +25,6 @@ public class TestInitCommandRunner implements CommandLineRunner {
     @Autowired
     MerchantRepository merchantRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -35,13 +33,5 @@ public class TestInitCommandRunner implements CommandLineRunner {
         company.setCompanyStatus(CompanyStatus.ACTIVE);
         company.setCompanyName("test");
         companyRepository.save(company);
-
-        Employee em = new Employee();
-        em.setEmail("string");
-        em.setEmployeeType(EmployeeType.ADMIN);
-        em.setEmployeeActiveStatus(EmployeeActiveStatus.ACTIVE);
-        em.setPassword(passwordEncoder.encode("string"));
-        em.setCompany(company);
-        employeeRepository.save(em);
     }
 }

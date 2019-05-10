@@ -10,7 +10,7 @@ public class AnnotationSecurityConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HashIdFilter());
+//        registry.addInterceptor(new HashIdFilter());
     }
 
 }

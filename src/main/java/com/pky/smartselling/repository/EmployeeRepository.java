@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findByEmail(@Param("email") String email);
+    Optional<Employee> findByFirebaseUid(@Param("firebaseUid") String uid);
 
 }

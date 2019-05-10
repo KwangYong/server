@@ -1,6 +1,5 @@
 package com.pky.smartselling.controller.api;
 
-import com.pky.smartselling.configuration.security.JwtTokenProvider;
 import com.pky.smartselling.controller.api.dto.AddTemporaryEmployeeDto;
 import com.pky.smartselling.controller.api.dto.UpdateEmailEmployeeDto;
 import com.pky.smartselling.controller.api.dto.SignInDto;
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,9 +32,6 @@ public class EmployeeController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
-
     public ResponseEntity<Void> updaterEmail(@PathVariable("employeeNo") String employeeNo, @RequestBody @Valid UpdateEmailEmployeeDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
@@ -47,13 +42,13 @@ public class EmployeeController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("temporary")
-    public ResponseEntity<AddTemporaryEmployeeDto.Response> addTemporary(@AuthenticationPrincipal Employee userDetails,
-                                                                              @RequestBody @Valid AddTemporaryEmployeeDto.Request request) {
+    @PostMapping("{email}")
+    public ResponseEntity<AddTemporaryEmployeeDto.Response> addTemporary(@PathVariable("email") String email,
+                                                                         @RequestBody @Valid AddTemporaryEmployeeDto.Request request) {
         final Employee copiedEmployee = new Employee();
         copiedEmployee.setEmployeeType(EmployeeType.USER);
 
-        String inviteCode = HashIdsUtil.encode(employeeService.addTemporaryEmployee(copiedEmployee).getEmployeeNo());
+        String inviteCode = HashIdsUtil.encode(employeeService.addEmployee(email).getEmployeeNo());
         return ResponseEntity.ok(new AddTemporaryEmployeeDto.Response(inviteCode));
     }
 
@@ -63,8 +58,7 @@ public class EmployeeController {
             String username = request.getEmail();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, request.getPassword()));
 
-            String token = jwtTokenProvider.createToken(username);
-            return ResponseEntity.ok(new SignInDto.Response("Bearer "+ token));
+            return ResponseEntity.ok(new SignInDto.Response("Bearer "));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }

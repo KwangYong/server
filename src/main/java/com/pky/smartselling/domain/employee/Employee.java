@@ -27,6 +27,9 @@ public class Employee extends Auditable implements UserDetails {
     @Column
     String email;
 
+    @Column(name = "firebase_uid")
+    String firebaseUid;
+
     @Column
     String password;
 

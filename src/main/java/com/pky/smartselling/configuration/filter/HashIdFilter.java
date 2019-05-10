@@ -23,11 +23,7 @@ public class HashIdFilter  extends HandlerInterceptorAdapter {
                 response.setStatus(HttpStatus.BAD_REQUEST.value());
                 return false;
             }
-
             request.setAttribute(HttpRequestAttributes.HASHID, new HashId(decode));
-
-
-
         }
 
         return super.preHandle(request, response, handler);
