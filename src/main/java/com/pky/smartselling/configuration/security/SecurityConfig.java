@@ -2,6 +2,7 @@ package com.pky.smartselling.configuration.security;
 
 import com.pky.smartselling.configuration.filter.FirebaseFilter;
 import com.pky.smartselling.domain.employee.EmployeeType;
+import com.pky.smartselling.service.EmployeeService;
 import com.pky.smartselling.service.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     FirebaseService firebaseService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     private static final String[] AUTH_WHITELIST = {
             // -- swagger ui

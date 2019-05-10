@@ -39,8 +39,9 @@ public class FirebaseFilter extends OncePerRequestFilter {
         } else {
             try {
                 FirebaseToken firebaseToken = this.firebaseService.getToken(xAuth);
-                Optional<Employee> employee = employeeService.findByEmailByStatus(firebaseToken.getEmail(), EmployeeActiveStatus.ACTIVE).or(() -> Optional.of(employeeService.updateMatchFirebaseUid(firebaseToken)));
-                SecurityContextHolder.getContext().setAuthentication(new FirebaseAuthenticationToken(employee.get()));
+                Employee employee = employeeService.findByEmailByStatus(firebaseToken.getEmail(), EmployeeActiveStatus.ACTIVE)
+                                                .orElse(employeeService.updateMatchFirebaseUid(firebaseToken));
+                SecurityContextHolder.getContext().setAuthentication(new FirebaseAuthenticationToken(employee));
                 filterChain.doFilter(request, response);
             } catch (FirebaseAuthException e) {
                 throw new SecurityException(e);
