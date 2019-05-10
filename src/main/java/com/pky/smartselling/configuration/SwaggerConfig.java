@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String AUTHORIZATION_HEADER = "X-Authorization-Firebase";
     public static final String DEFAULT_INCLUDE_PATTERN = ".*/api/.*";
 
     @Bean
