@@ -1,6 +1,5 @@
 package com.pky.smartselling.configuration.filter;
 
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.pky.smartselling.configuration.security.FirebaseAuthenticationToken;
 import com.pky.smartselling.domain.employee.Employee;
@@ -17,12 +16,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
+
+import static com.pky.smartselling.configuration.constant.HttpRequestAttributes.AUTHORIZATION_FIREBASE;
 
 @Slf4j
 public class FirebaseFilter extends OncePerRequestFilter {
-
-    private static String HEADER_NAME = "X-Authorization-Firebase";
 
     final FirebaseService firebaseService;
     final EmployeeService employeeService;
@@ -34,7 +32,7 @@ public class FirebaseFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String xAuth = request.getHeader(HEADER_NAME);
+        String xAuth = request.getHeader(AUTHORIZATION_FIREBASE);
         if (StringUtils.isBlank(xAuth)) {
             filterChain.doFilter(request, response);
             return;
@@ -45,11 +43,10 @@ public class FirebaseFilter extends OncePerRequestFilter {
                 Employee employee = employeeService.findByEmailByStatus(firebaseToken.getEmail(), EmployeeActiveStatus.ACTIVE)
                         .orElse(employeeService.updateMatchFirebaseUid(firebaseToken));
                 SecurityContextHolder.getContext().setAuthentication(new FirebaseAuthenticationToken(employee));
-
+                filterChain.doFilter(request, response);
             } catch (Exception e) {
                 log.info("Firebase not found token {}", xAuth);
             }
-            filterChain.doFilter(request, response);
         }
     }
 }

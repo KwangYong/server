@@ -5,6 +5,5 @@ public class HttpRequestAttributes {
     public static final String EMPLOYEE = "EMPLOYEE";
     public static final String HASHID_PAHT = "{HASHID}";
     public static final String HASHID = "HASHID";
-
-
+    public static final String AUTHORIZATION_FIREBASE = "X-Authorization-Firebase";
 }

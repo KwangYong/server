@@ -29,6 +29,13 @@ public class TestInitCommandRunner implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args) throws Exception {
+        Employee employee = new Employee();
+        employee.setFirebaseUid("4GwMqiDuUVdTAk4ryzZo7GSzTn63");
+        employee.setEmail("pky1030@gmail.com");
+        employee.setEmployeeActiveStatus(EmployeeActiveStatus.READY);
+        employee.setEmployeeType(EmployeeType.ADMIN);
+        employeeRepository.save(employee);
+
         Company company = new Company();
         company.setCompanyStatus(CompanyStatus.ACTIVE);
         company.setCompanyName("test");

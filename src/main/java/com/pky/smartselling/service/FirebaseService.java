@@ -34,8 +34,8 @@ public class FirebaseService {
         FirebaseApp.initializeApp(options);
     }
 
-    public FirebaseToken getToken(String idToken) throws FirebaseAuthException {
-        return FirebaseAuth.getInstance().verifyIdToken(idToken);
+    public FirebaseToken getToken(String token) throws FirebaseAuthException {
+        return FirebaseAuth.getInstance().verifyIdToken(token);
     }
 
 }

@@ -54,6 +54,7 @@ public class EmployeeService  {
     public Employee updateMatchFirebaseUid(FirebaseToken firebaseToken) {
         Employee employee = findByEmailByStatus(firebaseToken.getEmail(), EmployeeActiveStatus.READY).orElseThrow(ExceptionUtil.createNotFoundData("email", firebaseToken.getEmail()));
         employee.setFirebaseUid(firebaseToken.getUid());
+        employee.setEmployeeActiveStatus(EmployeeActiveStatus.ACTIVE);
         return employee;
     }
 
