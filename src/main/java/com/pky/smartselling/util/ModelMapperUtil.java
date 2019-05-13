@@ -16,12 +16,10 @@ public class ModelMapperUtil {
     static {
         MODEL_MAPPER = new ModelMapper();
         MODEL_MAPPER.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-        registerCompanyToAdminCompanyDtoResponse(MODEL_MAPPER);
-        registerCustomerToCustomerDtoResponse(MODEL_MAPPER);
-        registerFirebaseTokenToMyselfDtoResponse(MODEL_MAPPER);
+        registerCompanyToCompanyDtoResponse(MODEL_MAPPER);
     }
 
-    static void registerCompanyToAdminCompanyDtoResponse(ModelMapper modelMapper) {
+    static void registerCompanyToCompanyDtoResponse(ModelMapper modelMapper) {
         TypeMap<Company, AdminCompanyDto.Response> type =  modelMapper.createTypeMap(Company.class, AdminCompanyDto.Response.class);
         type.addMappings(mapping -> mapping.map(Company::getCompanyNo, AdminCompanyDto.Response::setCompanyId));
 
@@ -31,20 +29,7 @@ public class ModelMapperUtil {
         });
     }
 
-    static void registerCustomerToCustomerDtoResponse(ModelMapper modelMapper) {
-        TypeMap<Merchant, MerchantDto.Response> type =  modelMapper.createTypeMap(Merchant.class, MerchantDto.Response.class);
-        type.addMappings(mapping -> mapping.map(Merchant::getCustomerNo, MerchantDto.Response::setCustomerId));
 
-        type.setPostConverter( context -> {
-            context.getDestination().setCustomerId(HashIdsUtil.encode(context.getSource().getCustomerNo()));
-            return context.getDestination();
-        });
-    }
 
-    static void registerFirebaseTokenToMyselfDtoResponse(ModelMapper modelMapper) {
-        TypeMap<FirebaseToken, MyselfDto.Response> typeMap = modelMapper.createTypeMap(FirebaseToken.class, MyselfDto.Response.class);
-        typeMap.addMappings(mapping -> mapping.map(FirebaseToken::getName, MyselfDto.Response::setDisplayName));
-        typeMap.addMappings(mapping -> mapping.map(FirebaseToken::getEmail, MyselfDto.Response::setEmail));
-    }
 
 }

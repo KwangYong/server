@@ -13,6 +13,7 @@ import com.pky.smartselling.service.EmployeeService;
 import com.pky.smartselling.service.FirebaseService;
 import com.pky.smartselling.util.HashIdsUtil;
 import com.pky.smartselling.util.ModelMapperUtil;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,6 @@ public class EmployeeController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    FirebaseService firebaseService;
-
     public ResponseEntity<Void> updaterEmail(@PathVariable("employeeNo") String employeeNo, @RequestBody @Valid UpdateEmailEmployeeDto.Request request) {
         final Employee copyEmployee = new Employee();
         BeanUtils.copyProperties(request,  copyEmployee);
@@ -57,10 +55,5 @@ public class EmployeeController {
         return ResponseEntity.ok(new AddTemporaryEmployeeDto.Response(inviteCode));
     }
 
-    @GetMapping("myself")
-    public ResponseEntity<MyselfDto.Response> myself(@RequestAttribute(HttpRequestAttributes.AUTHORIZATION_FIREBASE) String token) throws FirebaseAuthException {
-        FirebaseToken firebaseToken = firebaseService.getToken(token);
-        return ResponseEntity.ok(ModelMapperUtil.MODEL_MAPPER.map(firebaseToken, MyselfDto.Response.class));
-    }
 
 }

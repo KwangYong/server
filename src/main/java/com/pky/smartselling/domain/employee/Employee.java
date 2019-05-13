@@ -4,6 +4,7 @@ import com.pky.smartselling.domain.Auditable;
 import com.pky.smartselling.domain.company.Company;
 import com.pky.smartselling.domain.department.Department;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 @Data
 @Entity

@@ -19,7 +19,7 @@ public class Department extends Auditable {
     @Column(nullable = false, name = "department_name")
     String departmentName;
 
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=false, fetch = FetchType.EAGER)
     @JoinColumn(name="company_no")
     Company company;
 
