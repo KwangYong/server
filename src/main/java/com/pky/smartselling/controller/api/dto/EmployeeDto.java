@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.ZoneOffset;
+import java.util.Optional;
 
 public class EmployeeDto {
     @ApiModel("EmployeeDto")
@@ -18,24 +19,30 @@ public class EmployeeDto {
 
     @ApiModel("EmployeeDto")
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Response {
 
         String employeeId;
-        String companyName;
         String companyId;
-        String departmentName;
+        String companyName;
         String departmentId;
+        String departmentName;
         String email;
         Long createdAt;
+
         public Response(Employee employee) {
-            employeeId = HashIdsUtil.encode(employee.getEmployeeNo());
-            companyId = HashIdsUtil.encode(employee.getDepartment().or().getCompany();
-            companyName = employee.getDepartment().getCompany().getCompanyName();
-            departmentName = employee.getDepartment().getDepartmentName();
-            departmentId = HashIdsUtil.encode(employee.getDepartment().getDepartmentNo());
+
+            Optional.ofNullable(employee.getDepartment()).ifPresent(d -> {
+                departmentId = HashIdsUtil.encode(d.getDepartmentNo());
+                departmentName = d.getDepartmentName();
+
+                Optional.ofNullable(d.getCompany()).ifPresent(c -> {
+                    companyId = HashIdsUtil.encode(c.getCompanyNo());
+                    companyName = c.getCompanyName();
+                });
+            });
+
             email = employee.getEmail();
+            employeeId = HashIdsUtil.encode(employee.getEmployeeNo());
             createdAt = employee.getCreatedAt().toEpochSecond(ZoneOffset.UTC);
         }
     }
