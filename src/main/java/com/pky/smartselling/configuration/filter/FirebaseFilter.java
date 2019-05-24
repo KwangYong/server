@@ -1,12 +1,15 @@
 package com.pky.smartselling.configuration.filter;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.pky.smartselling.configuration.constant.ErrorCode;
 import com.pky.smartselling.configuration.constant.HttpRequestAttributes;
 import com.pky.smartselling.configuration.security.FirebaseAuthenticationToken;
 import com.pky.smartselling.domain.employee.Employee;
 import com.pky.smartselling.domain.employee.EmployeeActiveStatus;
 import com.pky.smartselling.service.EmployeeService;
 import com.pky.smartselling.service.FirebaseService;
+import com.pky.smartselling.util.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,8 +49,15 @@ public class FirebaseFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(new FirebaseAuthenticationToken(employee));
                 request.setAttribute(HttpRequestAttributes.EMPLOYEE, employee);
                 filterChain.doFilter(request, response);
-            } catch (Exception e) {
-                log.error("Firebase not found token {}", xAuth, e);
+            } catch (FirebaseAuthException e) {
+                if(e.getErrorCode().equals("ERROR_INVALID_CREDENTIAL")) {
+                       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                       response.getWriter().write(ExceptionUtil.errorMessage(ErrorCode.AUTH_FIRBASE_TOKEN_NOT_YET_VALID));
+
+                       return;
+                } else {
+                    log.error("Firebase not found token {}", xAuth, e);
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.database.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class FirebaseService {
         FirebaseApp.initializeApp(options);
     }
 
-    public FirebaseToken getToken(String token) throws FirebaseAuthException {
+    public FirebaseToken getToken(@NotNull String token) throws FirebaseAuthException {
         return FirebaseAuth.getInstance().verifyIdToken(token);
     }
 

@@ -35,6 +35,11 @@ public class MerchantController {
         BeanUtils.copyProperties(customerDto, merchant);
         merchant.setCompany(employee.getCompany());
         merchantService.addCompany(merchant);
-        return ModelMapperUtil.MODEL_MAPPER.map(merchant, MerchantDto.Response.class);
+        return ModelMapperUtil.MODEL_MAPPER.map₩(merchant, MerchantDto.Response.class);
+    }
+
+    @GetMapping
+    public MerchantDto.ResponseMultiple getByCompany(@RequestAttribute(name = HttpRequestAttributes.EMPLOYEE) Employee employee) {
+        return ModelMapperUtil.MODEL_MAPPER.map(merchantService.findAllByCompany(employee.getCompany().getCompanyNo()), MerchantDto.ResponseMultiple.class);
     }
 }

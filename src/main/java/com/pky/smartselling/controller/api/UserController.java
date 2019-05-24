@@ -19,7 +19,7 @@ public class UserController {
     FirebaseService firebaseService;
 
     @GetMapping("myself")
-    public ResponseEntity<EmployeeDto.Response> myself(@RequestAttribute(HttpRequestAttributes.EMPLOYEE)Employee employee) throws FirebaseAuthException {
+    public ResponseEntity<EmployeeDto.Response> myself(@RequestAttribute(HttpRequestAttributes.EMPLOYEE)Employee employee)  {
 
         return ResponseEntity.ok(new EmployeeDto.Response(employee));
     }

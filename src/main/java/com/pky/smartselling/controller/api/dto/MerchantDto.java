@@ -1,11 +1,10 @@
 package com.pky.smartselling.controller.api.dto;
 
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class MerchantDto {
 
@@ -37,6 +36,12 @@ public class MerchantDto {
     @ApiModel("MerchantDto")
     @Data
     public static class Response extends Request{
-        String customerId;
+        String merchantId;
+    }
+
+    @ApiModel("MerchantDto")
+    @Data
+    public static class ResponseMultiple {
+        List<Response> merchants;
     }
 }
